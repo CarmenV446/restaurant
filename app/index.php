@@ -326,13 +326,6 @@ $result = $sql->fetchAll();
                         echo $menuItem['beschrijving'];
                         ?>
                     </p>
-                    <?php
-                    if ($menuItem['vega'] == 1) { ?>
-                    <span class="tag">
-                       <?php
-                       echo "Vega";
-                       }
-                       ?>
 
                     </span>                </article>
                 <?php }
@@ -369,13 +362,6 @@ $result = $sql->fetchAll();
                         echo $menuItem['beschrijving'];
                         ?>
                     </p>
-                    <?php
-                    if ($menuItem['vega'] == 1) { ?>
-                    <span class="tag">
-                       <?php
-                       echo "Vega";
-                       }
-                       ?>
 
                     </span>                </article>
                 <?php }
@@ -410,13 +396,6 @@ $result = $sql->fetchAll();
                         echo $menuItem['beschrijving'];
                         ?>
                     </p>
-                    <?php
-                    if ($menuItem['vega'] == 1) { ?>
-                    <span class="tag">
-                       <?php
-                       echo "Vega";
-                       }
-                       ?>
 
                     </span>
                 </article>
@@ -452,14 +431,6 @@ $result = $sql->fetchAll();
                         echo $menuItem['beschrijving'];
                         ?>
                     </p>
-                    <?php
-                    if ($menuItem['vega'] == 1) { ?>
-                    <span class="tag">
-                       <?php
-                            echo "Vega";
-                        }
-                        ?>
-
                     </span>
                 </article>
                 <?php }
@@ -496,14 +467,6 @@ $result = $sql->fetchAll();
                         echo $menuItem['beschrijving'];
                         ?>
                     </p>
-                    <?php
-                    if ($menuItem['vega'] == 1) { ?>
-                    <span class="tag">
-                       <?php
-                       echo "Vega";
-                       }
-                       ?>
-
                     </span>
                 </article>
                 <?php }
@@ -538,14 +501,6 @@ $result = $sql->fetchAll();
                         echo $menuItem['beschrijving'];
                         ?>
                     </p>
-                    <?php
-                    if ($menuItem['vega'] == 1) { ?>
-                    <span class="tag">
-                       <?php
-                       echo "Vega";
-                       }
-                       ?>
-
                     </span>
                 </article>
                 <?php }
@@ -580,14 +535,6 @@ $result = $sql->fetchAll();
                         echo $menuItem['beschrijving'];
                         ?>
                     </p>
-                    <?php
-                    if ($menuItem['vega'] == 1) { ?>
-                    <span class="tag">
-                       <?php
-                       echo "Vega";
-                       }
-                       ?>
-
                     </span>
                 </article>
                 <?php }

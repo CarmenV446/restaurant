@@ -1,4 +1,3 @@
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -19,7 +18,6 @@ body {
     flex-direction: column;
 }
 
-/* paper grid */
 body::before {
     content: '';
     position: fixed;
@@ -94,7 +92,7 @@ nav {
 
 .nav-link:hover { opacity: 1; color: var(--red); }
 
-/* ── MAIN LAYOUT ── */
+/* ── MAIN ── */
 main {
     flex: 1;
     display: flex;
@@ -174,21 +172,12 @@ main {
 }
 
 .btn:hover::before { left: 120%; }
-.btn:hover { transform: translateY(-2px); }
+.btn:hover  { transform: translateY(-2px); }
 .btn:active { transform: translateY(0); }
 
-.btn-primary {
-    background: var(--red);
-    color: #fff;
-    border-color: var(--red);
-}
+.btn-primary { background: var(--red); color: #fff; border-color: var(--red); }
 
-.btn-outline {
-    background: transparent;
-    color: var(--dark);
-    border-color: var(--dark);
-}
-
+.btn-outline { background: transparent; color: var(--dark); border-color: var(--dark); }
 .btn-outline:hover { background: var(--dark); color: var(--cream); }
 
 .btn-danger {
@@ -198,7 +187,6 @@ main {
     font-size: 0.68rem;
     padding: 0.45rem 0.9rem;
 }
-
 .btn-danger:hover { background: var(--red); color: #fff; }
 
 .btn-edit {
@@ -208,7 +196,6 @@ main {
     font-size: 0.68rem;
     padding: 0.45rem 0.9rem;
 }
-
 .btn-edit:hover { border-color: var(--green); color: var(--green); }
 
 /* ── STATS BAR ── */
@@ -249,7 +236,6 @@ main {
 .stat-value {
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--dark);
     line-height: 1;
 }
 
@@ -257,10 +243,9 @@ main {
     font-size: 0.75rem;
     font-weight: 400;
     opacity: 0.5;
-    margin-left: 0.2rem;
 }
 
-/* ── TABLE WRAPPER ── */
+/* ── TABLE ── */
 .table-wrapper {
     background: #fff;
     border: 2px solid var(--blush);
@@ -280,13 +265,12 @@ main {
 }
 
 .table-title {
-    font-size: 0.72rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--dark);
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
 }
 
 .table-title .dot { color: var(--red); }
@@ -331,7 +315,7 @@ main {
     flex-direction: column;
     gap: 0.2rem;
     flex: 1;
-    min-width: 160px;
+    min-width: 150px;
 }
 
 .product-name {
@@ -356,51 +340,22 @@ main {
     flex-shrink: 0;
 }
 
-.product-status {
-    flex-shrink: 0;
-}
-
 .status-badge {
     font-size: 0.6rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 0.25rem 0.65rem;
     border: 1.5px solid;
+    flex-shrink: 0;
 }
 
-.status-badge.active {
-    color: #4a7c3a;
-    border-color: var(--green);
-    background: rgba(174,194,137,0.12);
-}
-
-.status-badge.inactive {
-    color: rgba(44,24,16,0.4);
-    border-color: rgba(44,24,16,0.2);
-}
+.status-badge.active   { color: #4a7c3a; border-color: var(--green); background: rgba(174,194,137,0.12); }
+.status-badge.inactive { color: rgba(44,24,16,0.4); border-color: rgba(44,24,16,0.2); }
 
 .product-actions {
     display: flex;
     gap: 0.6rem;
     flex-shrink: 0;
-}
-
-/* ── EMPTY STATE ── */
-.empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 4rem 2rem;
-    opacity: 0.45;
-}
-
-.empty-state .emoji { font-size: 2.5rem; }
-
-.empty-state p {
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
 }
 
 /* ── CONFIRM DIALOG ── */
@@ -424,7 +379,6 @@ main {
     max-width: 360px;
     width: 90%;
     position: relative;
-    animation: fadeUp 0.3s ease both;
 }
 
 .dialog::before {
@@ -435,31 +389,10 @@ main {
     background: linear-gradient(90deg, var(--red), var(--green));
 }
 
-.dialog-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 0.6rem;
-}
-
-.dialog-title {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.dialog-sub {
-    font-size: 0.78rem;
-    opacity: 0.55;
-    line-height: 1.6;
-    margin-bottom: 1.8rem;
-}
-
-.dialog-actions {
-    display: flex;
-    gap: 0.8rem;
-}
+.dialog-label { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--red); margin-bottom: 0.6rem; }
+.dialog-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+.dialog-sub   { font-size: 0.78rem; opacity: 0.55; line-height: 1.6; margin-bottom: 1.8rem; }
+.dialog-actions { display: flex; gap: 0.8rem; }
 
 /* ── MARQUEE ── */
 .marquee-band {
@@ -486,21 +419,75 @@ main {
 
 .marquee-track .dot { color: var(--red); padding: 0 0.2rem; }
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes marquee {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
 }
 
-/* ── RESPONSIVE ── */
 @media (max-width: 640px) {
-    nav   { padding: 1rem 1.2rem; }
-    main  { padding: 2rem 1.2rem; }
-    .page-title { font-size: 1.6rem; }
+    nav  { padding: 1rem 1.2rem; }
+    main { padding: 2rem 1.2rem; }
+    .page-title  { font-size: 1.6rem; }
     .product-price { display: none; }
+}
+.form-box {
+    width: 210px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, rgb(244, 219, 219), rgb(174, 194, 137));
+    border-radius: 30px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.075);
+}
+
+.form-text {
+    width: 200px;
+    height: 40px;
+    border: none;
+    outline: none;
+    caret-color: rgb(205, 70, 98);
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+    padding-left: 15px;
+    letter-spacing: 0.8px;
+    color: rgb(19, 19, 19);
+    font-size: 13.4px;
+}
+
+.form-main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 350px;
+}
+
+.form-button {
+    padding: 6px 13px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 300;
+    color: #000;
+    background-color: #CD4662;
+    border: none;
+    border-radius: 40px;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+.form-button:hover {
+    background-color: #AEC289;
+    box-shadow: 0px 15px 20px rgb(174, 194, 137);
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+.form-button:active {
+    transform: translateY(-1px);
 }

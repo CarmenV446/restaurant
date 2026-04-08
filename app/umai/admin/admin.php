@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['isIngelogd']) || $_SESSION['isIngelogd'] == false) {
-    header('Location: login.php');
+    header("location: login.php");
 }
 ?>
 
@@ -12,6 +12,16 @@ $sql->execute();
 $result = $sql->fetchAll();
 ?>
 
+<?php
+if (isset($_POST['verwijderen'])) {
+    $connectie = new PDO('mysql:host=mysql_db;dbname=school', 'root', 'rootpassword');
+    $sql = $connectie->prepare("DELETE FROM menu WHERE id = :id");
+    $sql->bindParam(':id', $_POST['delete_id']);
+    $sql->execute();
+}
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="nl">
@@ -20,14 +30,14 @@ $result = $sql->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Admin — Umai 旨い</title>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
-    <link href="admin.css" rel="stylesheet" type="text/css"/
+    <link href="admin.css" rel="stylesheet" />
 
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-    <a href="../..index.php" class="nav-logo">
+    <a href="../../index.php" class="nav-logo">
         <span class="kanji">旨い · Masarap · 맛있어</span>
         <span class="brand">Umai</span>
     </a>
@@ -40,15 +50,14 @@ $result = $sql->fetchAll();
 <!-- MAIN -->
 <main>
 
-    <!-- PAGE HEADER -->
+    <!-- HEADER -->
     <div class="page-header">
         <div class="page-header-left">
             <span class="section-label">✦ Beheer — Productenoverzicht</span>
             <h1 class="page-title">Producten<br><span class="green">Overzicht</span></h1>
         </div>
         <div class="page-header-actions">
-            <a href="product-aanpassen.html" class="btn btn-outline">✎ Aanpassen</a>
-            <a href="product-toevoegen.html" class="btn btn-primary">＋ Product Toevoegen</a>
+            <a href="product-toevoegen.php" class="btn btn-primary">＋ Product Toevoegen</a>
         </div>
     </div>
 
@@ -56,33 +65,124 @@ $result = $sql->fetchAll();
     <div class="stats-bar">
         <div class="stat-card">
             <span class="stat-label">Totaal producten</span>
-            <span class="stat-value" id="stat-total">8</span>
+            <!-- PHP: -->
+            <span class="stat-value"><?php
+               echo count($result)
+            ?>
+            </span>
         </div>
-        <div class="stat-card">
-            <span class="stat-label">Actief</span>
-            <span class="stat-value" id="stat-active">7</span>
-        </div>
+
         <div class="stat-card">
             <span class="stat-label">Categorieën</span>
-            <span class="stat-value">4</span>
+            <span class="stat-value">
+                  <?php
+                  $sql = $connectie->prepare("SELECT COUNT(DISTINCT categorie) FROM menu");
+                  $sql->execute();
+                  $cat = $sql->fetchColumn();
+                  echo $cat;
+                  ?>
+            </span>
         </div>
-        <div class="stat-card">
-            <span class="stat-label">Gem. prijs</span>
-            <span class="stat-value">€12<span class="unit">,50</span></span>
-        </div>
+        <form method="get" class="form-main" action="admin.php">
+            <div class="form-box">
+                <input class="form-text" type="text" id="search" name="search" placeholder="search..">
+            </div>
+            <input class="form-button" name="submit" type="submit" value="Submit">
+        </form>
+        <?php
+        if (isset($_GET['submit'])) {
+            $sql = $connectie->prepare("SELECT * FROM menu WHERE naam LIKE :search");
+            $sql->bindValue(':search', '%' . $_GET['search'] . '%');
+            $sql->execute();
+            $result = $sql->fetchAll();
+        } else {
+            $sql = $connectie->prepare("SELECT * FROM menu");
+            $sql->execute();
+            $result = $sql->fetchAll();
+        }
+
+        ?>
     </div>
 
-    <!-- PRODUCT TABLE -->
+    <!-- PRODUCT LIST -->
     <div class="table-wrapper">
         <div class="table-header">
             <span class="table-title">
                 <span class="dot">✦</span> Alle producten
             </span>
-            <span class="product-count" id="count-label">8 producten</span>
+            <span class="product-count"><?php
+                echo count($result)
+                ?> producten</span>
         </div>
 
-        <div class="product-list" id="product-list">
-            <!-- rows inserted by JS -->
+        <div class="product-list">
+
+             <?php foreach ($result as $menuItem){?>
+
+            <div class="product-row">
+                <span class="product-emoji">
+                    <?php
+                    if($menuItem["categorie"] == "Ramen"){
+                        echo "🍜";
+                    }
+                    elseif ($menuItem["categorie"] == "Soepen"){
+                        echo "🍲";
+                    }
+                    elseif ($menuItem["categorie"] == "Desserts"){
+                        echo "🍦";
+                    }
+                    elseif ($menuItem["categorie"] == "Bao & Rice"){
+                        echo "🍚";
+                    }
+                    elseif ($menuItem["categorie"] == "Dranken"){
+                        echo "🍵";
+                    }
+                    elseif ($menuItem["categorie"] == "Small Plates"){
+                        echo "🍡";
+                    }
+                    ?>
+                    </span>
+                <div class="product-info">
+                    <span class="product-name">
+                        <?php
+                        echo $menuItem['naam'];
+                        ?>
+                    </span>
+                    <span class="product-category">
+                        <?php
+                        echo $menuItem['categorie'];
+                        ?>
+                    </span>
+                </div>
+                <span class="product-price">€
+                    <?php
+                    echo $menuItem['prijs'];
+                    ?>
+                </span>
+                <div class="product-actions">
+                    <a href="product-aanpassen.php?id=<?php
+    echo $menuItem['id'];
+    ?>" class="btn btn-edit">✎ Aanpassen</a>
+                    <button class="btn btn-danger" onclick="askDelete('<?php echo $menuItem['naam'] ?>')">✕ Verwijderen</button>
+                    <form method="post" action="admin.php" class="overlay" id="overlay">
+                        <input type="hidden" id="delete_id" name="delete_id" value="<?php echo $menuItem['id'] ?>"/>
+                        <div class="dialog">
+                            <div class="dialog-label">⚠ Verwijderen</div>
+                            <div class="dialog-title" id="dialog-title">Product verwijderen?</div>
+                            <p class="dialog-sub">Weet je zeker dat je dit product wilt verwijderen? Dit kan niet ongedaan worden gemaakt.</p>
+                            <div class="dialog-actions">
+                                <button type="submit" name="verwijderen" class="btn btn-danger">Verwijderen</button>
+                                <button class="btn btn-outline" id="cancel-delete">Annuleren</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <?php } ?>
+
+
+
         </div>
     </div>
 
@@ -109,104 +209,26 @@ $result = $sql->fetchAll();
 </div>
 
 <!-- CONFIRM DIALOG -->
-<div class="overlay" id="overlay">
-    <div class="dialog">
-        <div class="dialog-label">⚠ Verwijderen</div>
-        <div class="dialog-title" id="dialog-title">Product verwijderen?</div>
-        <p class="dialog-sub" id="dialog-sub">Weet je zeker dat je dit product wilt verwijderen? Dit kan niet ongedaan worden gemaakt.</p>
-        <div class="dialog-actions">
-            <button class="btn btn-danger" id="confirm-delete">✕ Verwijderen</button>
-            <button class="btn btn-outline" id="cancel-delete">Annuleren</button>
-        </div>
-    </div>
-</div>
+
 
 <script>
-    // ── PRODUCT DATA ──
-    let products = [
-        { id: 1, name: 'Tonkotsu Ramen',        category: 'Ramen',        price: '14,50', emoji: '🍜', active: true  },
-        { id: 2, name: 'Bulgogi Bao',            category: 'Small Plates', price: '9,00',  emoji: '🥟', active: true  },
-        { id: 3, name: 'Halo-Halo Sundae',       category: 'Desserts',     price: '7,50',  emoji: '🍨', active: true  },
-        { id: 4, name: 'Ube Black Sesame Latte', category: 'Dranken',      price: '5,50',  emoji: '🧋', active: true  },
-        { id: 5, name: 'Adobo Ramen',            category: 'Ramen',        price: '15,00', emoji: '🍲', active: true  },
-        { id: 6, name: 'Matcha Tiramisu',        category: 'Desserts',     price: '6,50',  emoji: '🍵', active: false },
-        { id: 7, name: 'Calamansi Yuzu Cooler',  category: 'Dranken',      price: '4,50',  emoji: '🍋', active: true  },
-        { id: 8, name: 'Sinigang Miso Soup',     category: 'Small Plates', price: '11,00', emoji: '🥣', active: true  },
-    ];
-
-    let pendingDeleteId = null;
-
-    // ── RENDER ──
-    function render() {
-        const list = document.getElementById('product-list');
-        list.innerHTML = '';
-
-        if (products.length === 0) {
-            list.innerHTML = `
-                <div class="empty-state">
-                    <span class="emoji">🍜</span>
-                    <p>Geen producten gevonden</p>
-                </div>`;
-        } else {
-            products.forEach(p => {
-                const row = document.createElement('div');
-                row.className = 'product-row';
-                row.setAttribute('data-id', p.id);
-                row.innerHTML = `
-                    <span class="product-emoji">${p.emoji}</span>
-                    <div class="product-info">
-                        <span class="product-name">${p.name}</span>
-                        <span class="product-category">${p.category}</span>
-                    </div>
-                    <span class="product-price">€${p.price}</span>
-                    <div class="product-status">
-                        <span class="status-badge ${p.active ? 'active' : 'inactive'}">
-                            ${p.active ? '● Actief' : '○ Inactief'}
-                        </span>
-                    </div>
-                    <div class="product-actions">
-                        <a href="product-aanpassen.html?id=${p.id}" class="btn btn-edit">✎ Aanpassen</a>
-                        <button class="btn btn-danger" onclick="askDelete(${p.id}, '${p.name}')">✕ Verwijderen</button>
-                    </div>
-                `;
-                list.appendChild(row);
-            });
-        }
-
-        // update stats
-        document.getElementById('stat-total').textContent = products.length;
-        document.getElementById('stat-active').textContent = products.filter(p => p.active).length;
-        document.getElementById('count-label').textContent = `${products.length} product${products.length !== 1 ? 'en' : ''}`;
-    }
-
-    // ── DELETE FLOW ──
-    function askDelete(id, name) {
-        pendingDeleteId = id;
-        document.getElementById('dialog-title').textContent = `"${name}" verwijderen?`;
+    function askDelete(naam) {
+        document.getElementById('dialog-title').textContent = '"' + naam + '" verwijderen?';
         document.getElementById('overlay').classList.add('open');
     }
 
-    document.getElementById('confirm-delete').addEventListener('click', () => {
-        products = products.filter(p => p.id !== pendingDeleteId);
-        pendingDeleteId = null;
-        document.getElementById('overlay').classList.remove('open');
-        render();
-    });
-
-    document.getElementById('cancel-delete').addEventListener('click', () => {
-        pendingDeleteId = null;
+    document.getElementById('cancel-delete').addEventListener('click', function () {
         document.getElementById('overlay').classList.remove('open');
     });
 
-    document.getElementById('overlay').addEventListener('click', (e) => {
+    document.getElementById('overlay').addEventListener('click', function (e) {
         if (e.target === e.currentTarget) {
-            pendingDeleteId = null;
             document.getElementById('overlay').classList.remove('open');
         }
     });
 
-    // ── INIT ──
-    render();
+
+
 </script>
 </body>
 </html>
