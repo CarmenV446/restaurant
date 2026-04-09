@@ -7,13 +7,13 @@ $result = $sql->fetchAll();
 
 <?php
 if (isset($_POST['toevoegen'])) {
-$connectie = new PDO('mysql:host=mysql_db;dbname=school', 'root', 'rootpassword');
-$sql = $connectie->prepare("INSERT INTO menu (categorie, naam, beschrijving, prijs) VALUES (:categorie, :naam, :beschrijving, :prijs)");
-$sql->bindValue(':categorie', $_POST['categorie']);
-$sql->bindValue(':naam', $_POST['naam']);
-$sql->bindValue(':beschrijving', $_POST['beschrijving']);
-$sql->bindValue(':prijs', $_POST['prijs']);
-$sql->execute();
+    $connectie = new PDO('mysql:host=mysql_db;dbname=school', 'root', 'rootpassword');
+    $sql = $connectie->prepare("INSERT INTO menu (categorie, naam, beschrijving, prijs) VALUES (:categorie, :naam, :beschrijving, :prijs)");
+    $sql->bindValue(':categorie', $_POST['categorie']);
+    $sql->bindValue(':naam', $_POST['naam']);
+    $sql->bindValue(':beschrijving', $_POST['beschrijving']);
+    $sql->bindValue(':prijs', $_POST['prijs']);
+    $sql->execute();
 }
 ?>
 
@@ -82,8 +82,8 @@ $sql->execute();
                                 <option value="" disabled selected>Kies een categorie</option>
                                 <option value="Ramen">Ramen</option>
                                 <option value="Small Plates">Small Plates</option>
-                                <option value="Bao & Rice Bowls">Bao &amp; Rice Bowls</option>
-                                <option value="Soepen & Noodles">Soepen &amp; Noodles</option>
+                                <option value="Bao & Rice">Bao &amp; Rice Bowls</option>
+                                <option value="Soepen">Soepen &amp; Noodles</option>
                                 <option value="Desserts">Desserts</option>
                                 <option value="Dranken">Dranken</option>
                             </select>
@@ -146,17 +146,6 @@ $sql->execute();
     </div>
 </div>
 
-<script>
-    // Vegan toggle
- //   var veganRow   = document.getElementById('vegan-row');
-   // var veganCheck = document.getElementById('vegan');
-  //  var veganLabel = document.getElementById('vegan-label');
 
-    //veganRow.addEventListener('click', function () {
-      //  veganCheck.checked = !veganCheck.checked;
-        //veganRow.classList.toggle('checked', veganCheck.checked);
-       // veganLabel.textContent = veganCheck.checked ? '🌱 Vega' : 'Niet vega';
-  //  });
-</script>
 </body>
 </html>

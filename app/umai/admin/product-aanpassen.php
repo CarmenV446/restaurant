@@ -96,8 +96,8 @@ if(isset($_POST['veranderen'])) {
                                 <!-- PHP: voeg selected toe waar $product['categorie'] overeenkomt -->
                                 <option value="Ramen" selected>Ramen</option>
                                 <option value="Small Plates">Small Plates</option>
-                                <option value="Bao & Rice Bowls">Bao &amp; Rice Bowls</option>
-                                <option value="Soepen & Noodles">Soepen &amp; Noodles</option>
+                                <option value="Bao & Rice">Bao &amp; Rice Bowls</option>
+                                <option value="Soepen">Soepen &amp; Noodles</option>
                                 <option value="Desserts">Desserts</option>
                                 <option value="Dranken">Dranken</option>
                             </select>
@@ -116,17 +116,7 @@ if(isset($_POST['veranderen'])) {
                         </div>
                     </div>
 
-                    <div class="vegan-group">
-                        <span class="main-label">Vegan</span>
-                        <label class="toggle-row<?= $data['vega'] ? ' checked' : '' ?>" id="vegan-row">
-                            <input type="checkbox" id="vegan" name="vegan" value="<?php if ($data['vega']): ?> checked <?php endif; ?>"/>
-                            <div class="toggle-box"></div>
-                            <div class="toggle-text">
-                                <strong id="vegan-label">Niet vegan</strong>
-                                <span>Klik om te wijzigen</span>
-                            </div>
-                        </label>
-                    </div>
+
 
                 </div>
 
@@ -170,23 +160,6 @@ if(isset($_POST['veranderen'])) {
     </div>
 </div>
 
-<script>
-    // Vegan toggle — synchroon met checkbox state (PHP vult 'checked' in)
-    var veganRow   = document.getElementById('vegan-row');
-    var veganCheck = document.getElementById('vegan');
-    var veganLabel = document.getElementById('vegan-label');
 
-    function syncToggle() {
-        veganRow.classList.toggle('checked', veganCheck.checked);
-        veganLabel.textContent = veganCheck.checked ? '🌱 Vegan' : 'Niet vegan';
-    }
-
-    syncToggle(); // beginstaat instellen
-
-    veganRow.addEventListener('click', function () {
-        veganCheck.checked = !veganCheck.checked;
-        syncToggle();
-    });
-</script>
 </body>
 </html>
