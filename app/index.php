@@ -273,7 +273,7 @@ $result = $sql->fetchAll();
             </form>
             <?php
             if (isset($_GET['submit'])) {
-                $sql = $connectie->prepare("SELECT * FROM menu WHERE beschrijving LIKE :search");
+                $sql = $connectie->prepare("SELECT * FROM menu WHERE beschrijving LIKE :search OR naam LIKE :search");
                 $sql->bindValue(':search', '%' . $_GET['search'] . '%');
                 $sql->execute();
                 $result = $sql->fetchAll();

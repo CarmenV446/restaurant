@@ -211,6 +211,6 @@ if (isset($_POST['verwijderen'])) {
 <!-- CONFIRM DIALOG -->
 
 
-<script src="admin.js.js"></script>
+<script src="admin.js"></script>
 </body>
 </html>
